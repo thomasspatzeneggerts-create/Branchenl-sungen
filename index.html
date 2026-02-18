@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Industriesauger Beratung (Netz)</title>
+    <style>
+      /* Minimal: keep same look as local file; full CSS omitted for brevity in S:-copy */
+      body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #020617; color:#e5e7eb; padding:12px }
+      .chip { display:inline-flex; padding:6px 12px; border-radius:999px; background:#071020 }
+    </style>
+  </head>
+  <body>
+    <div>
+      <!-- Link to S: Datenbank remains, header removed per request -->
+    </div>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Industriesauger Beratung</title>
+    <style>
+      :root {
+        --bg: #020617;
+        --bg-elevated: #0b1120;
+        --bg-soft: #020617;
+        --accent: #3b82f6;
+        --accent-soft: rgba(59, 130, 246, 0.16);
+        --accent-strong: #2563eb;
+        --text: #e5e7eb;
+        --text-muted: #9ca3af;
+        --border-subtle: #1f2937;
+        --danger: #f97373;
+        --radius-lg: 20px;
+        --radius-md: 14px;
+        --shadow-soft: 0 24px 80px rgba(15, 23, 42, 0.9);
+        --shadow-card: 0 18px 50px rgba(15, 23, 42, 0.85);
+        --transition-fast: 150ms ease-out;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+        color: var(--text);
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        padding: 24px 12px;
+      }
+
+      .app-shell {
+        width: 100%;
+        max-width: 1200px;
+        background: radial-gradient(circle at top left, #020617 0, #030712 50%);
+        border-radius: 28px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        box-shadow: var(--shadow-soft);
+        padding: 22px 20px 18px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .glow {
+        position: absolute;
+        inset: -120px;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at top left, rgba(59, 130, 246, 0.3), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(147, 197, 253, 0.12), transparent 55%);
+        mix-blend-mode: screen;
+        opacity: 0.9;
+        z-index: 0;
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px 18px;
+      }
+
+      .title-block {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 10px 3px 5px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        background: rgba(15, 23, 42, 0.9);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .pill-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 30%, #22c55e, #16a34a);
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.4);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(24px, 2.2vw, 30px);
+        letter-spacing: 0.02em;
+        color: #f9fafb;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .summary {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-end;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #020617, #020617);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        font-size: 11px;
+        color: var(--text-muted);
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.8);
+      }
+
+      .chip strong {
+        color: #e5e7eb;
+        font-weight: 600;
+      }
+
+      .chip-accent {
+        border-color: rgba(59, 130, 246, 0.7);
+        background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.28), rgba(15, 23, 42, 0.2));
+        color: #dbeafe;
+      }
+
+      .chip-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .filters-card {
+        border-radius: var(--radius-lg);
+        background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        padding: 14px 14px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .filters-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+        gap: 10px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 16px 10px;
+        }
+
+        .app-shell {
+          padding: 16px 14px 14px;
+          border-radius: 20px;
+        }
+
+        .filters-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .summary {
+          align-items: flex-start;
+        }
+      }
+
+      .field-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      .input-shell {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .input,
+      .select {
+        width: 100%;
+        border-radius: 999px;
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        background: radial-gradient(circle at top left, #020617, #020617);
+        color: var(--text);
+        padding: 7px 12px 7px 30px;
+        font-size: 13px;
+        outline: none;
+        transition: border-color var(--transition-fast),
+          box-shadow var(--transition-fast),
+          background-color var(--transition-fast),
+          transform 120ms ease-out;
+      }
+
+      .input::placeholder {
+        color: #6b7280;
+      }
+
+      .input:focus,
+      .select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+        transform: translateY(-1px);
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 9px;
+        width: 14px;
+        height: 14px;
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      .select-wrapper {
+        position: relative;
+      }
+
+      .select {
+        appearance: none;
+        -webkit-appearance: none;
+        padding-left: 12px;
+        padding-right: 28px;
+        color: #f9fafb; /* helle Schrift im Feld */
+      }
+
+      /* Lesbare Optionen im aufgeklappten Dropdown */
+      select.select option {
+        background-color: #020617; /* dunkler Hintergrund */
+        color: #f9fafb;            /* helle Schrift */
+      }
+
+      select.select option:checked,
+      select.select option:hover {
+        background-color: #1f2937;
+        color: #f9fafb;
+      }
+
+      .select-arrow {
+        position: absolute;
+        right: 9px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 9px;
+        height: 9px;
+        opacity: 0.85;
+        pointer-events: none;
+      }
+
+      .status-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--text-muted);
+        padding: 0 2px;
+      }
+
+      .status-main {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.55);
+      }
+
+      .status-badge {
+        padding: 3px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        background: rgba(15, 23, 42, 0.9);
+      }
+
+      .suggestions-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 2px;
+      }
+
+      .suggestion-chip {
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        background: rgba(15, 23, 42, 0.9);
+        font-size: 11px;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: background-color var(--transition-fast),
+          border-color var(--transition-fast),
+          transform 100ms ease-out;
+      }
+
+      .suggestion-chip:hover {
+        border-color: var(--accent);
+        background: rgba(37, 99, 235, 0.25);
+        color: #e5e7eb;
+        transform: translateY(-1px);
+      }
+
+      .results-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr);
+        gap: 14px;
+      }
+
+      @media (max-width: 900px) {
+        .results-layout {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .cards-panel {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-subtle);
+        background: linear-gradient(180deg, #020617, #020617);
+        padding: 10px 10px 8px;
+        max-height: 480px;
+        overflow-y: auto;
+        box-shadow: var(--shadow-card);
+      }
+
+      .cards-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .cards-count {
+        font-weight: 500;
+        color: #e5e7eb;
+      }
+
+      .cards-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .card {
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(31, 41, 55, 0.95);
+        background: radial-gradient(circle at top left, #020617, #020617);
+        padding: 10px 11px 9px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        transition: background-color 140ms ease-out,
+          border-color 140ms ease-out,
+          transform 120ms ease-out,
+          box-shadow 140ms ease-out;
+      }
+
+      .card:hover {
+        border-color: rgba(59, 130, 246, 0.7);
+        background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.2), #020617);
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.85);
+        transform: translateY(-1px);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: baseline;
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f9fafb;
+      }
+
+      .card-series {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 11px;
+      }
+
+      .badge-industry {
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(45, 212, 191, 0.12);
+        border: 1px solid rgba(45, 212, 191, 0.7);
+        color: #a5f3fc;
+      }
+
+      .badge-media {
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.14);
+        border: 1px solid rgba(59, 130, 246, 0.7);
+        color: #bfdbfe;
+      }
+
+      .badge-atex {
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(248, 250, 252, 0.04);
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        color: #e5e7eb;
+      }
+
+      .badge-spec {
+        padding: 2px 7px;
+        border-radius: 999px;
+        border: 1px solid rgba(55, 65, 81, 0.85);
+        color: #cbd5f5;
+        font-size: 10px;
+      }
+
+      .card-note {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .empty-state {
+        padding: 24px 12px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .empty-state strong {
+        color: #e5e7eb;
+      }
+
+      .side-panel {
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(30, 64, 175, 0.8);
+        background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.3), #020617);
+        padding: 12px 12px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .side-title {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: #bfdbfe;
+      }
+
+      .side-text {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .side-list {
+        font-size: 12px;
+        color: var(--text-muted);
+        padding-left: 16px;
+        margin: 4px 0 0;
+      }
+
+      footer {
+        margin-top: 4px;
+        font-size: 11px;
+        color: #6b7280;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="glow"></div>
+      <div class="content">
+        <header>
+          <div class="title-block">
+            <div class="pill">
+              <span class="pill-dot"></span>
+              INDUSTRIESAUGER · BERATUNGSTOOL
+            </div>
+            <h1>Passende Sauger nach Saugmedium finden</h1>
+            <p class="subtitle">
+              Gib das Saugmedium ein (z.&nbsp;B. "Späne/Emulsion") und filtere
+              zusätzlich nach Branche, um passende, bereits verkaufte
+              Sauger-Vorschläge zu erhalten.
+            </p>
+          </div>
+          <div class="summary">
+            <div class="chip-row">
+              <div class="chip chip-accent">
+                <span class="chip-dot"></span>
+                <span><strong id="chip-total">0</strong>&nbsp;Einträge in der Historie</span>
+              </div>
+              <div class="chip">
+                <span>Treffer:&nbsp;<strong id="chip-matches">0</strong></span>
+              </div>
+            </div>
+            <div class="chip" style="font-size: 10px; opacity: 0.9">
+              <a href="file:///S:/Saugtechnik/Saugtechnik%20allgemein/Staubdatenbank/Unterst%C3%BCtzung%20Industriesauger/Datenbank.md" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline">Hinweis: Grundlage ist deine hinterlegte Datenbank.</a>
+            </div>
+          </div>
+        </header>
+
+        <section class="filters-card">
+          <div class="filters-grid">
+            <div>
+              <div class="field-label">Volltext-Suche (alle Felder)</div>
+              <div class="input-shell">
+                <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L19 20.5 20.5 19l-5-5zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"
+                  />
+                </svg>
+                <input
+                  id="input-medium"
+                  class="input"
+                  type="text"
+                  placeholder="z.B. Späne, Emulsion, Pumpe, Metall ..."
+                  autocomplete="off"
+                />
+              </div>
+              <div class="suggestions-row" id="suggestions"></div>
+            </div>
+            <div>
+              <div class="field-label">Branche</div>
+              <div class="select-wrapper">
+                <select id="select-industry" class="select">
+                  <option value="">Alle Branchen</option>
+                </select>
+                <svg class="select-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M7 10l5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="status-row">
+            <div class="status-main">
+              <span class="status-dot"></span>
+              <span>
+                <strong id="status-count">0</strong>
+                &nbsp;Treffer ·
+                <span id="status-filters">kein Filter aktiv</span>
+              </span>
+            </div>
+            <div class="status-badge" id="status-hint">
+              Es wird in allen Spalten gesucht (Saugmedium, Sauger, Bemerkungen,
+              Vorabscheider, Branche).
+            </div>
+          </div>
+        </section>
+
+        <section class="results-layout">
+          <div class="cards-panel">
+            <div class="cards-header">
+              <div>
+                <span class="cards-count" id="header-results">0 Vorschläge</span>
+                <span> · sortiert nach Relevanz</span>
+              </div>
+              <div>Scrollen, um weitere Vorschläge zu sehen</div>
+            </div>
+            <div id="cards" class="cards-list"></div>
+          </div>
+
+          <aside class="side-panel">
+            <div class="side-title">Einsatz des Tools</div>
+            <p class="side-text">
+              Dieses Webtool unterstützt Vertrieb und Technik bei der schnellen
+              Vorauswahl von geeigneten Industriesaugern anhand deiner
+              Datenbank.
+            </p>
+            <ul class="side-list">
+              <li>Beliebigen Suchbegriff eingeben (z. B. „Pumpe“, „Späne“)</li>
+              <li>Optional Branche wählen</li>
+              <li>Passende Referenz-Sauger anzeigen lassen</li>
+            </ul>
+          </aside>
+        </section>
+
+        <footer>
+          Interne Arbeitshilfe – ohne Gewähr. Bitte technische Datenblätter und
+          ATEX-/Staubklassifizierung immer separat prüfen.
+        </footer>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+      (function () {
+        const allCases = Array.isArray(window.CASES) ? window.CASES : [];
+
+        const inputMedium = document.getElementById("input-medium");
+        const selectIndustry = document.getElementById("select-industry");
+        const suggestionsEl = document.getElementById("suggestions");
+        const cardsEl = document.getElementById("cards");
+        const chipTotalEl = document.getElementById("chip-total");
+        const chipMatchesEl = document.getElementById("chip-matches");
+        const statusCountEl = document.getElementById("status-count");
+        const statusFiltersEl = document.getElementById("status-filters");
+        const headerResultsEl = document.getElementById("header-results");
+
+        function normalize(text) {
+          return (text || "")
+            .toString()
+            .toLowerCase()
+            .trim();
+        }
+
+        function unique(arr) {
+          return [...new Set(arr.filter(Boolean))];
+        }
+
+        function initIndustrySelect() {
+          const industries = unique(allCases.map((c) => c.branche || "")).sort(
+            (a, b) => a.localeCompare(b, "de")
+          );
+
+          industries.forEach((name) => {
+            if (!name) return;
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            selectIndustry.appendChild(opt);
+          });
+        }
+
+        function initMediumSuggestions() {
+          const allMedia = unique(allCases.map((c) => c.saugmedium || ""));
+          const popular = allMedia.slice(0, 8);
+
+          suggestionsEl.innerHTML = "";
+          popular.forEach((medium) => {
+            if (!medium) return;
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "suggestion-chip";
+            chip.textContent = medium;
+            chip.addEventListener("click", () => {
+              inputMedium.value = medium;
+              applyFilters();
+            });
+            suggestionsEl.appendChild(chip);
+          });
+        }
+
+        function scoreCase(item, qNorm, industryFilterNorm) {
+          let score = 0;
+
+          // Branchenfilter (muss passen, sonst fällt der Datensatz raus)
+          if (industryFilterNorm) {
+            const bNorm = normalize(item.branche);
+            if (bNorm !== industryFilterNorm) {
+              return -1;
+            }
+            score += 5;
+          }
+
+          // Kein Textfilter: es zählen nur Branche/Relevanzpunkte
+          if (!qNorm) return score;
+
+          const fields = {
+            saugmedium: normalize(item.saugmedium),
+            sauger: normalize(item.sauger),
+            bemerkungSauger: normalize(item.bemerkungSauger),
+            vorabscheider: normalize(item.vorabscheider),
+            bemerkungVorabscheider: normalize(item.bemerkungVorabscheider),
+            branche: normalize(item.branche),
+            preisliste: normalize(item.preisliste),
+            link: normalize(item.link),
+            preislisteLink: normalize(item.preislisteLink),
+            preislisteLinkVorabscheider: normalize(
+              item.preislisteLinkVorabscheider
+            ),
+          };
+
+          let hasTextMatch = false;
+
+          if (fields.saugmedium === qNorm) {
+            score += 10;
+            hasTextMatch = true;
+          }
+          if (fields.sauger === qNorm) {
+            score += 8;
+            hasTextMatch = true;
+          }
+
+          if (fields.saugmedium.includes(qNorm)) {
+            score += 6;
+            hasTextMatch = true;
+          }
+          if (fields.sauger.includes(qNorm)) {
+            score += 5;
+            hasTextMatch = true;
+          }
+          if (fields.bemerkungSauger.includes(qNorm)) {
+            score += 3;
+            hasTextMatch = true;
+          }
+          if (fields.vorabscheider.includes(qNorm)) {
+            score += 3;
+            hasTextMatch = true;
+          }
+          if (fields.bemerkungVorabscheider.includes(qNorm)) {
+            score += 2;
+            hasTextMatch = true;
+          }
+          if (fields.branche.includes(qNorm)) {
+            score += 2;
+            hasTextMatch = true;
+          }
+          if (fields.preisliste.includes(qNorm)) {
+            score += 3;
+            hasTextMatch = true;
+          }
+          if (fields.link.includes(qNorm)) {
+            score += 2;
+            hasTextMatch = true;
+          }
+          if (fields.preislisteLink.includes(qNorm)) {
+            score += 2;
+            hasTextMatch = true;
+          }
+          if (fields.preislisteLinkVorabscheider.includes(qNorm)) {
+            score += 2;
+            hasTextMatch = true;
+          }
+
+          // Wenn ein Textfilter gesetzt ist, aber kein Feld passt, Datensatz verwerfen
+          if (qNorm && !hasTextMatch) {
+            return -1;
+          }
+
+          return score;
+        }
+
+        function applyFilters() {
+          const qNorm = normalize(inputMedium.value);
+          const industryFilterNorm = normalize(selectIndustry.value);
+
+          const scored = allCases
+            .map((item) => ({
+              item,
+              score: scoreCase(item, qNorm, industryFilterNorm),
+            }))
+            .filter((s) => s.score >= 0)
+            .sort((a, b) => b.score - a.score);
+
+          const matches = scored.map((s) => s.item);
+
+          renderCards(matches);
+          updateStatus(matches.length, qNorm, industryFilterNorm);
+        }
+
+        function renderCards(items) {
+          cardsEl.innerHTML = "";
+
+          if (!items.length) {
+            const div = document.createElement("div");
+            div.className = "empty-state";
+            div.innerHTML =
+              "<strong>Keine passenden Vorschläge gefunden.</strong><br />" +
+              "Bitte anderes Stichwort probieren oder Branchenfilter zurücksetzen.";
+            cardsEl.appendChild(div);
+            return;
+          }
+
+          items.forEach((c) => {
+            const card = document.createElement("article");
+            card.className = "card";
+
+            const header = document.createElement("div");
+            header.className = "card-header";
+            header.innerHTML = `
+              <div>
+                <div class="card-title">${c.sauger}</div>
+                <div class="card-series">${c.saugmedium || ""}</div>
+              </div>
+              <div class="badge-spec">ID #${c.id}</div>
+            `;
+
+            const badges = document.createElement("div");
+            badges.className = "badge-row";
+            badges.innerHTML = `
+              ${c.branche
+                ? `<span class="badge-industry">${c.branche}</span>`
+                : ""}
+              ${c.vorabscheider
+                ? `<span class="badge-media">Vorabscheider: ${c.vorabscheider}</span>`
+                : ""}
+              ${c.bemerkungSauger
+                ? `<span class="badge-atex">${c.bemerkungSauger}</span>`
+                : ""}
+              ${c.bemerkungVorabscheider
+                ? `<span class="badge-spec">${c.bemerkungVorabscheider}</span>`
+                : ""}
+              ${c.preisliste && !normalize(c.preisliste).includes("anfrage st")
+                ? `<span class="badge-spec">Preisliste: ${c.preisliste}</span>`
+                : ""}
+            `;
+
+            const actions = document.createElement("div");
+            actions.style.marginTop = "4px";
+            actions.style.display = "flex";
+            actions.style.flexWrap = "wrap";
+            actions.style.gap = "6px";
+
+            if (c.link) {
+              const linkBtn = document.createElement("a");
+              linkBtn.href = c.link;
+              linkBtn.target = "_blank";
+              linkBtn.rel = "noopener noreferrer";
+              linkBtn.textContent = "Zum Artikel";
+              linkBtn.style.display = "inline-block";
+              linkBtn.style.fontSize = "11px";
+              linkBtn.style.padding = "4px 10px";
+              linkBtn.style.borderRadius = "999px";
+              linkBtn.style.border = "1px solid rgba(59,130,246,0.8)";
+              linkBtn.style.background = "rgba(37,99,235,0.18)";
+              linkBtn.style.color = "#bfdbfe";
+              linkBtn.style.textDecoration = "none";
+              linkBtn.style.cursor = "pointer";
+              actions.appendChild(linkBtn);
+            }
+
+            if (c.preislisteLink || c.preislisteLinkVorabscheider) {
+              if (c.preislisteLink) {
+                const plSaugerBtn = document.createElement("a");
+                plSaugerBtn.href = c.preislisteLink;
+                plSaugerBtn.target = "_blank";
+                plSaugerBtn.rel = "noopener noreferrer";
+                plSaugerBtn.textContent = "Preisliste Sauger";
+                plSaugerBtn.style.display = "inline-block";
+                plSaugerBtn.style.fontSize = "11px";
+                plSaugerBtn.style.padding = "4px 10px";
+                plSaugerBtn.style.borderRadius = "999px";
+                plSaugerBtn.style.border = "1px solid rgba(148,163,184,0.8)";
+                plSaugerBtn.style.background = "rgba(15,23,42,0.7)";
+                plSaugerBtn.style.color = "#e5e7eb";
+                plSaugerBtn.style.textDecoration = "none";
+                plSaugerBtn.style.cursor = "pointer";
+                actions.appendChild(plSaugerBtn);
+              }
+
+              if (c.preislisteLinkVorabscheider) {
+                const plVorBtn = document.createElement("a");
+                plVorBtn.href = c.preislisteLinkVorabscheider;
+                plVorBtn.target = "_blank";
+                plVorBtn.rel = "noopener noreferrer";
+                plVorBtn.textContent = "Preisliste Vorabscheider";
+                plVorBtn.style.display = "inline-block";
+                plVorBtn.style.fontSize = "11px";
+                plVorBtn.style.padding = "4px 10px";
+                plVorBtn.style.borderRadius = "999px";
+                plVorBtn.style.border = "1px solid rgba(148,163,184,0.8)";
+                plVorBtn.style.background = "rgba(15,23,42,0.7)";
+                plVorBtn.style.color = "#e5e7eb";
+                plVorBtn.style.textDecoration = "none";
+                plVorBtn.style.cursor = "pointer";
+                actions.appendChild(plVorBtn);
+              }
+            }
+
+            // E-Mail-Möglichkeit bei "Preisliste: Anfrage ST"
+            if (c.preisliste && c.preisliste.toLowerCase().includes("anfrage st")) {
+              const emailBtn = document.createElement("a");
+              const subject = encodeURIComponent(
+                `Preisliste Anfrage: ${c.sauger || "Industriesauger"}`
+              );
+              const body = encodeURIComponent(
+                `Bitte um Zusendung der Preisliste zu folgendem Eintrag aus dem Beratungstool:%0D%0A%0D%0A` +
+                  `Saugmedium: ${c.saugmedium || ""}%0D%0A` +
+                  `Sauger: ${c.sauger || ""}%0D%0A` +
+                  (c.vorabscheider ? `Vorabscheider: ${c.vorabscheider}%0D%0A` : "") +
+                  (c.branche ? `Branche: ${c.branche}%0D%0A` : "") +
+                  `ID: ${c.id}`
+              );
+              emailBtn.href = `mailto:saugtechnik@stangl.at?subject=${subject}&body=${body}`;
+              emailBtn.textContent = "Preisliste anfragen (E-Mail)";
+              emailBtn.style.display = "inline-block";
+              emailBtn.style.fontSize = "11px";
+              emailBtn.style.padding = "4px 10px";
+              emailBtn.style.borderRadius = "999px";
+              emailBtn.style.border = "1px solid rgba(56,189,248,0.8)";
+              emailBtn.style.background = "rgba(8,47,73,0.9)";
+              emailBtn.style.color = "#e0f2fe";
+              emailBtn.style.textDecoration = "none";
+              emailBtn.style.cursor = "pointer";
+              actions.appendChild(emailBtn);
+            }
+
+            const noteTextParts = [];
+            if (c.bemerkungSauger) noteTextParts.push(`Sauger: ${c.bemerkungSauger}`);
+            if (c.vorabscheider)
+              noteTextParts.push(`Vorabscheider: ${c.vorabscheider}`);
+            if (c.bemerkungVorabscheider)
+              noteTextParts.push(`Vorabscheider-Info: ${c.bemerkungVorabscheider}`);
+
+            card.appendChild(header);
+            card.appendChild(badges);
+            if (actions.children.length) {
+              card.appendChild(actions);
+            }
+
+            if (noteTextParts.length) {
+              const note = document.createElement("div");
+              note.className = "card-note";
+              note.textContent = noteTextParts.join(" · ");
+              card.appendChild(note);
+            }
+
+            cardsEl.appendChild(card);
+          });
+        }
+
+        function updateStatus(count, qNorm, industryFilterNorm) {
+          chipTotalEl.textContent = allCases.length.toString();
+          chipMatchesEl.textContent = count.toString();
+          statusCountEl.textContent = count.toString();
+          headerResultsEl.textContent = `${count} Vorschläge`;
+
+          const parts = [];
+          if (qNorm) {
+            parts.push(`Suchtext: "${qNorm}"`);
+          }
+          if (industryFilterNorm) {
+            parts.push(`Branche: "${selectIndustry.value}"`);
+          }
+
+          statusFiltersEl.textContent = parts.length
+            ? parts.join(" · ")
+            : "kein Filter aktiv";
+        }
+
+        inputMedium.addEventListener("input", () => {
+          applyFilters();
+        });
+
+        selectIndustry.addEventListener("change", () => {
+          applyFilters();
+        });
+
+        initIndustrySelect();
+        initMediumSuggestions();
+        applyFilters();
+      })();
+    </script>
+  </body>
+</html>

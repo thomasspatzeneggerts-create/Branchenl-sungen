@@ -1,0 +1,12 @@
+// data.js
+window.CASES = [
+    {
+        id: 1,
+        saugmedium: "Späne/Emulsion",
+        sauger: "IVC 60/24-2",
+        bemerkungSauger: "Für Metallbearbeitung geeignet",
+        vorabscheider: "50L Vorabscheider",
+        bemerkungVorabscheider: "Mit Schwimmer",
+        branche: "Metall"
+    }
+];
